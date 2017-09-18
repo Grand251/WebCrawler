@@ -30,11 +30,11 @@ public class WebCrawler {
     
     
     private static void crawl(String URL, int depth) {
-        String page = getPage(URL); // Get HTML code
-        processPage(page); //Create and store the Unigram    
+        String HTML = getPage(URL); // Get HTML code
+        processPage(HTML); //Create and store the Unigram    
         
         if (depth > 0) {
-            String[] links; //= getLinks(page);
+            String[] links = getLinks(HTML);
             String link;
             for (int i = 0; i < links.length; i++) {
                 link = links[i];
@@ -44,16 +44,16 @@ public class WebCrawler {
     }
     //Returns HTML string of page
     private static String getPage(String URL) {
-        String page = "";
-        return page;
+        String HTML = "";
+        return HTML;
     }
     
     //Creates and stores UNI-Gram
-    private static void processPage(String page) {
+    private static void processPage(String HTML) {
         
     }
     //Returns String array of all links found in HTML
-    private static String[] getLinks(String page) {
+    private static String[] getLinks(String HTML) {
         String[] links;        
         return links;
     }
