@@ -28,11 +28,12 @@ public class WebCrawler {
         
     }
     
+    treeFromSeed mainTree = new treeFromSeed;
     
     private static void crawl(String URL, int depth) {
         String HTML = getPage(URL); // Get HTML code
-        processPage(HTML); //Create and store the Unigram    
-        
+        char[] thisUnigraham = processPage(HTML);
+        mainTREE.intake(URL,HTML,thisUnigraham);
         if (depth > 0) {
             String[] links = getLinks(HTML);
             String link;
@@ -49,7 +50,7 @@ public class WebCrawler {
     }
     
     //Creates and stores UNI-Gram
-    private static void processPage(String HTML) {
+    private static char[] processPage(String HTML) {
         char a_char;
         
         int indexOf;
@@ -61,7 +62,8 @@ public class WebCrawler {
                 freqOfChar[indexOf]++;
             }
         }
-        //DO WE RETURN THE ARRAY OR MAKE A GLOBAL CLASS?? AUTO SAVE?
+        //DO WE RETURN THE ARRAY OR MAKE A GLOBAL CLASS?? AUTO SAVE
+        return freqOfChar[];
     }
     //Returns String array of all links found in HTML
     private static String[] getLinks(String HTML) {
@@ -80,8 +82,28 @@ public class WebCrawler {
     //returns the index of the same char in the 95 chars we are looking at
     private static int whichChar(char theChar){
         int theIndex = -1;
-        
+        // Create table for comparison Loop over all possible ASCII codes to max.
+        int min = 0;
+        int max =95;
+        char[] compCharArr= new char[95];
+        for (int i = min; i < max; i++) {
+            char c = (char) i;
+            compCharArr[i]=c;
+        }
+        for (int i = min; i < max; i++) {
+            if (compCharArr[i]==theChar) {
+                   return i;
+             }
+        }
         return theIndex;
     }
     
+}
+
+public class treeFromSeed {
+    
+    public static void intake(){
+        //add url to the tree; overload the paramerters so if HTML is given, add HTML and LINKS to tree element
+        //also load all links into a hash to test for repeating links. test first.
+    }
 }
