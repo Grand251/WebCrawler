@@ -39,7 +39,9 @@ public class WebCrawler {
             String link;
             for (int i = 0; i < links.length; i++) {
                 link = links[i];
-                crawl(link, --depth);
+                if (!treeFromSeed.Contains(URL)){
+                    crawl(link, --depth);
+                }
             }
         }
     }
