@@ -31,10 +31,13 @@ public class WebCrawler {
     treeFromSeed mainTree = new treeFromSeed;
     
     private static void crawl(String URL, int depth) {
-        String HTML = getPage(URL); // Get HTML code
-        char[] thisUnigraham = processPage(HTML);
-        mainTREE.intake(URL,HTML,thisUnigraham);
+        if (depth <=0 && !mainTree.contains(URL)){
+            mainTree.intake(URL);
+        }
         if (depth > 0) {
+            String HTML = getPage(URL); // Get HTML code
+            char[] thisUnigraham = processPage(HTML);
+            mainTREE.intake(URL,HTML,thisUnigraham);
             String[] links = getLinks(HTML);
             String link;
             for (int i = 0; i < links.length; i++) {
@@ -104,8 +107,40 @@ public class WebCrawler {
 
 public class treeFromSeed {
     
+    TreeNode aTN = new TreeNode;
+    hash aHash = new hash;
+  
     public static void intake(){
         //add url to the tree; overload the paramerters so if HTML is given, add HTML and LINKS to tree element
         //also load all links into a hash to test for repeating links. test first.
     }
+    public static bool Contains(URL){
+        //return true if aHash includes URL
+        
+    }
+}
+
+public class TreeNode<T> implements Iterable<TreeNode<T>> {
+
+    string aURL;
+    string HTML;
+    char[] aUnigraham;
+    T data;
+    TreeNode<T> parent;
+    List<TreeNode<T>> children;
+
+    public TreeNode(T data) {
+        this.data = data;
+        this.children = new LinkedList<TreeNode<T>>();
+    }
+
+    public TreeNode<T> addChild(T child) {
+        TreeNode<T> childNode = new TreeNode<T>(child);
+        childNode.parent = this;
+        this.children.add(childNode);
+        return childNode;
+    }
+
+    // other features ...
+
 }
