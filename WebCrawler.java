@@ -110,7 +110,11 @@ public class treeFromSeed {
     TreeNode aTN = new TreeNode;
     hash aHash = new hash;
   
-    public static void intake(){
+    public static void intake(string URL){
+        //add url to the tree; overload the paramerters so if HTML is given, add HTML and LINKS to tree element
+        //also load all links into a hash to test for repeating links. test first.
+    }
+    public static void intake(string URL, string HTML, char[] unigraham){
         //add url to the tree; overload the paramerters so if HTML is given, add HTML and LINKS to tree element
         //also load all links into a hash to test for repeating links. test first.
     }
@@ -120,22 +124,28 @@ public class treeFromSeed {
     }
 }
 
-public class TreeNode<T> implements Iterable<TreeNode<T>> {
+public class TreeNode {
 
     string aURL;
     string HTML;
     char[] aUnigraham;
-    T data;
-    TreeNode<T> parent;
-    List<TreeNode<T>> children;
+    
+    TreeNode parent;
+    List<TreeNode> children;
 
-    public TreeNode(T data) {
+    public TreeNode() {
         this.data = data;
-        this.children = new LinkedList<TreeNode<T>>();
+        this.children = new LinkedList<TreeNode>();
     }
 
-    public TreeNode<T> addChild(T child) {
-        TreeNode<T> childNode = new TreeNode<T>(child);
+    public TreeNode add(T child) {
+        TreeNode childNode = new TreeNode(child);
+        childNode.parent = this;
+        this.children.add(childNode);
+        return childNode;
+    }
+    public TreeNode addChild(T child) {
+        TreeNode childNode = new TreeNode(child);
         childNode.parent = this;
         this.children.add(childNode);
         return childNode;
