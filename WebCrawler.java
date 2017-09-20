@@ -7,6 +7,10 @@
 
 package webcrawler;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.File;
+import java.io.FileWriter;
 
 /**
  *
@@ -54,44 +58,41 @@ public class WebCrawler {
     }
     
     //Creates UNI-Gram and store page
-    private static char[] processPage(String HTML, int pageNum) {
-        char a_char;
+    private static void processPage(String HTML, int pageNum) {
+        char myChar;
         int indexOf;
         
-        int[] freqOfChar95 = new int[95];
+        int[] uniGram = new int[95];
         for (int pos = 0; pos < HTML.length(); ++pos){
-            a_char = HTML.charAt(pos);
-            indexOf = (int) theChar;
-            if (indeOf >= 32 && indexOf < 127) {
-                freqOfChar[indexOf-32]++;
+            myChar = HTML.charAt(pos);
+            indexOf = (int) myChar;
+            if (indexOf >= 32 && indexOf < 127) {
+                uniGram[indexOf - 32]++;
             }
         }
        
-        File desktop = new File(System.getProperty("user.home"), "Desktop");
-        File file = new File(desktop + "\\" + pagenum + ".txt");
- 	            /*If file gets created then the createNewFile()
- 	             * method would return true or if the file is
- 	             * already present it would return false
- 	             */
-        boolean fvar = file.createNewFile();
-        if (fvar){
-                 System.out.println("File has been created successfully");
-             }
-        else{
-                 System.out.println("File already present at the specified location");
-             }
-        file.println(HTML);
-        return freqOfChar[];
+        try {
+            File file = new File("./pages/" + pageNum + ".txt");
+            FileWriter writer = new FileWriter(file);
+            writer.write(HTML);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            
+        }
+        
+        
     }
     
     
     //Returns String array of all links found in HTML
     private static String[] getLinks(String HTML) {
         String[] links;
-        Pattern p = Pattern.compile("href=\"(.*?)\"");
+        Pattern p = Pattern.compile("href=\"([^\"]*)\"");
         Matcher m = p.matcher(HTML);
-        magnitude = 0;
+        int  magnitude = 0;
         while (m.find()) {
+            m.group(1)
             links[magnitude] = m.group(1);
             magnitude++;
         }
