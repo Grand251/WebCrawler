@@ -65,7 +65,6 @@ public class WebCrawler {
        
         File desktop = new File(System.getProperty("user.home"), "Desktop");
         File file = new File(desktop + pagenum + "\\outputHtml.txt");
-        pageNum++;
  	            /*If file gets created then the createNewFile()
  	             * method would return true or if the file is
  	             * already present it would return false
