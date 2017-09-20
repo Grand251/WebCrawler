@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class WebCrawler {
 
     public static void main(String[] args) {
+        int pageNum = 0;
         int maxDepth;
         String startURL;
         Scanner scanner = new Scanner(System. in); 
@@ -24,12 +25,13 @@ public class WebCrawler {
         maxDepth = Integer.parseInt(scanner.nextLine());
         
         for (int depth = 1; depth <= maxDepth; depth++)
-            crawl(startURL, depth);
+            pageNum = crawl(startURL, depth, pageNum);
         
     }
     
     
-    private static void crawl(String URL, int depth) {
+    private static int crawl(String URL, int depth, int pageNum) {
+        pageNum++;
         String HTML = getPage(URL); // Get HTML code
         processPage(HTML); //Create and store the Unigram    
         
@@ -38,9 +40,10 @@ public class WebCrawler {
             String link;
             for (int i = 0; i < links.length; i++) {
                 link = links[i];
-                crawl(link, --depth);
+                crawl(link, --depth, pageNum);
             }
         }
+        return pageNum;
     }
     //Returns HTML string of page
     private static String getPage(String URL) {
