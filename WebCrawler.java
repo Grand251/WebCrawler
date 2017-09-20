@@ -33,7 +33,7 @@ public class WebCrawler {
     private static int crawl(String URL, int depth, int pageNum) {
         pageNum++;
         String HTML = getPage(URL); // Get HTML code
-        processPage(HTML); //Create and store the Unigram    
+        processPage(HTML, pageNum); //Create and store the Unigram    
         
         if (depth > 0) {
             String[] links = getLinks(HTML);
