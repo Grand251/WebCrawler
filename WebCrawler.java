@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class WebCrawler {
 
     public static void main(String[] args) {
+        int pageNum = 0;
         int maxDepth;
         String startURL;
         Scanner scanner = new Scanner(System. in); 
@@ -24,24 +25,27 @@ public class WebCrawler {
         maxDepth = Integer.parseInt(scanner.nextLine());
        
         for (int depth = 1; depth <= maxDepth; depth++)
-            crawl(startURL, depth);
+            pageNum = crawl(startURL, depth, pageNum);
         
     }
     
 
     
-    private static void crawl(String URL, int depth) {
 
+    private static int crawl(String URL, int depth, int pageNum) {
+        pageNum++;
+        String HTML = getPage(URL); // Get HTML code
+        processPage(HTML, pageNum); //Create and store the Unigram    
+        
         if (depth > 0) {
-            String HTML = getPage(URL); // Get HTML code
-            processPage(HTML);
             String[] links = getLinks(HTML);
             String link;
             for (int i = 0; i < links.length; i++) {
                 link = links[i];
-                    crawl(link, --depth);
+                crawl(link, --depth, pageNum);
             }
         }
+        return pageNum;
     }
     //Returns HTML string of page
     private static String getPage(String URL) {
@@ -49,7 +53,7 @@ public class WebCrawler {
         return HTML;
     }
     
-    //Creates and stores UNI-Gram
+    //Creates UNI-Gram and store page
     private static char[] processPage(String HTML, int pageNum) {
         char a_char;
         int indexOf;
@@ -58,13 +62,13 @@ public class WebCrawler {
         for (int pos = 0; pos < HTML.length(); ++pos){
             a_char = HTML.charAt(pos);
             indexOf = (int) theChar;
-            if (indeOf > 32 && indexOf < 127) {
+            if (indeOf >= 32 && indexOf < 127) {
                 freqOfChar[indexOf-32]++;
             }
         }
        
         File desktop = new File(System.getProperty("user.home"), "Desktop");
-        File file = new File(desktop + pagenum + "\\outputHtml.txt");
+        File file = new File(desktop + "\\" + pagenum + ".txt");
  	            /*If file gets created then the createNewFile()
  	             * method would return true or if the file is
  	             * already present it would return false
