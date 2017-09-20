@@ -108,7 +108,7 @@ public class WebCrawler {
         Matcher m = p.matcher(HTML);
         int  magnitude = 0;
         while (m.find()) {
-            links[magnitude] = m.group(1).substring(link.indexOf("http://")+7, link.indexOf("\"", link.indexOf("http://")));;
+            links[magnitude] = m.group(1).substring(m.group(1).indexOf("http://")+7, m.group(1).indexOf("\"", m.group(1).indexOf("http://")));;
             magnitude++;
         }
         return links;
