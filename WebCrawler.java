@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Arrays.asList;
 import java.net.URL;
 import java.net.*;
 import java.io.DataInputStream;
@@ -102,19 +103,18 @@ public class WebCrawler {
         }
 
     }
-
-    //Returns String array of all links found in HTML
-    public static String[] getLinks(String HTML) {
-        String[] links = {"href=\"auburn.edu\""};
+    
+    
+    //Returns String arraylist of all links found in HTML
+    private static List<string> getLinks(String HTML) {
+        List<string> links = new ArrayList<string>;
         Pattern p = Pattern.compile("href=\"([^\"]*)\"");
         Matcher m = p.matcher(HTML);
-        int magnitude = 0;
         while (m.find()) {
-            m.group(1);
-            links[magnitude] = m.group(1);
-            magnitude++;
+            links.add(m.group(1).substring(m.group(1).indexOf("http://")+7, m.group(1).indexOf("\"", m.group(1).indexOf("http://"))));
         }
-        return links;
     }
+  
+  
 
 }
