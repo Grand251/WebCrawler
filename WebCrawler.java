@@ -52,8 +52,24 @@ public class WebCrawler {
         return pageNum;
     }
     //Returns HTML string of page
-    private static String getPage(String URL) {
-        String HTML = "";
+       private static String getPage(String URL_link) throws MalformedURLException, IOException {
+                String HTML = "";
+            java.net.URL url = new URL(URL_link); //args[0]
+            URLConnection connection = url.openConnection();
+
+            try {
+                  DataInputStream in = new DataInputStream(connection.getInputStream());
+                    String text;
+                    while ((text = in.readLine()) != null)
+                    {
+                       HTML += "  " + text + "\n");
+                    }
+                }
+            catch (IOException e) {
+                        System.out.println("Exception Occurred:");
+                        e.printStackTrace();
+                    }
+
         return HTML;
     }
     
