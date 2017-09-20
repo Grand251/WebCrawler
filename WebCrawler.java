@@ -10,11 +10,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Arrays.asList;
 import java.net.URL;
 import java.net.*;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList<E>;
 
 /**
  *
