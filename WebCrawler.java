@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Arrays.asList;
 
 /**
  *
@@ -101,15 +102,13 @@ public class WebCrawler {
     }
     
     
-    //Returns String array of all links found in HTML
-    private static String[] getLinks(String HTML) {
-        String[] links;
+    //Returns String arraylist of all links found in HTML
+    private static List<string> getLinks(String HTML) {
+        List<string> links = new ArrayList<string>;
         Pattern p = Pattern.compile("href=\"([^\"]*)\"");
         Matcher m = p.matcher(HTML);
-        int  magnitude = 0;
         while (m.find()) {
-            links[magnitude] = m.group(1).substring(m.group(1).indexOf("http://")+7, m.group(1).indexOf("\"", m.group(1).indexOf("http://")));;
-            magnitude++;
+            links.add(m.group(1).substring(m.group(1).indexOf("http://")+7, m.group(1).indexOf("\"", m.group(1).indexOf("http://"))));
         }
         return links;
     }
