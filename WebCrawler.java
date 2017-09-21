@@ -14,7 +14,8 @@ import java.net.URL;
 import java.net.*;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.ArrayList<E>;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -47,10 +48,8 @@ public class WebCrawler {
             processPage(HTML, pageNum); //Create Unigram and Store HTML
 
             if (depth > 0) {
-                String[] links = getLinks(HTML);
-                String link;
-                for (int i = 0; i < links.length; i++) {
-                    link = links[i];
+                ArrayList<String> links = (ArrayList<String>) getLinks(HTML);
+                for (String link : links) {
                     crawl(link, --depth, pageNum);
                 }
             }
@@ -103,18 +102,16 @@ public class WebCrawler {
         }
 
     }
-    
-    
+
     //Returns String arraylist of all links found in HTML
-    private static List<string> getLinks(String HTML) {
-        List<string> links = new ArrayList<string>;
+    private static ArrayList<String> getLinks(String HTML) {
+        ArrayList<String> links = new ArrayList();
         Pattern p = Pattern.compile("href=\"([^\"]*)\"");
         Matcher m = p.matcher(HTML);
         while (m.find()) {
-            links.add(m.group(1).substring(m.group(1).indexOf("http://")+7, m.group(1).indexOf("\"", m.group(1).indexOf("http://"))));
+            links.add(m.group(1).substring(m.group(1).indexOf("http://") + 7, m.group(1).indexOf("\"", m.group(1).indexOf("http://"))));
         }
+        return links;
     }
-  
-  
 
 }
