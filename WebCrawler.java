@@ -24,8 +24,7 @@ import java.util.ArrayList;
 public class WebCrawler {
 
     public static void main(String[] args) {
-        //File f = new File(".");
-        //System.out.println(f.getAbsolutePath());
+        long startTime = System.currentTimeMillis();
         int pageNum = 0;
         int maxDepth;
         String startURL;
@@ -36,8 +35,10 @@ public class WebCrawler {
         maxDepth = Integer.parseInt(scanner.nextLine());
 
         for (int depth = 1; depth <= maxDepth; depth++) {
-            pageNum = crawl(startURL, depth, pageNum);
+            pageNum = crawl(startURL, maxDepth, pageNum);
         }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time took: " + (endTime - startTime) + " milliseconds");
 
     }
 
@@ -53,7 +54,7 @@ public class WebCrawler {
             if (depth > 0) {
                 ArrayList<String> links = (ArrayList<String>) getLinks(HTML);
                 for (String link : links) {
-                    pageNum = crawl(link, --depth, pageNum);
+                    pageNum = crawl(link, depth - 1, pageNum);
                 }
             }
         } catch (MalformedURLException e) {
@@ -95,13 +96,23 @@ public class WebCrawler {
         }
         String path = ""; //Test
         try {
+            File dir = new File("pages");
+    
+    // attempt to create the directory here
+            if(dir.mkdir()) {
+                System.out.println("Pages directory created.");
+            }
             File file = new File("pages/" + pageNum + ".txt");
             path = file.getAbsolutePath();
             FileWriter writer = new FileWriter(file);
             writer.write(HTML);
             writer.flush();
             writer.close();
-            System.out.println(pageNum);
+            System.out.print("Page: " + pageNum + "  ");
+            for ( int i = 0; i < uniGram.length; i ++) {
+                System.out.print(" '" + (char)(i + 32) + "'-" + uniGram[i] + " ");
+            }
+            System.out.println();
         } catch (IOException e) {
             System.out.println("File could not be written:\n" + path);
         }
@@ -114,7 +125,7 @@ public class WebCrawler {
         Pattern p = Pattern.compile("href=\"([^\"]*)\"");
         Matcher m = p.matcher(HTML);
         String link = "";
-        while (m.find()) {
+        while (m.find() && links.size() < 13) {
             //System.out.println(m.group());
             
             String href = m.group();
@@ -123,10 +134,9 @@ public class WebCrawler {
             href = href.substring(0, href.length() - 1);
             //link = m.group().substring(m.group().indexOf("\"") + 1, m.group().indexOf("\"", m.group().indexOf("\"")) + 1);
             links.add(href);
-            //System.out.println(href);
+            
         }
         return links;
     }
 
 }
-
