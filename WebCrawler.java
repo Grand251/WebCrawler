@@ -16,6 +16,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 /**
  *
  * @author Owner
@@ -26,15 +27,6 @@ public class WebCrawler {
         long startTime = System.currentTimeMillis();
         int pageNum = 0;
         int maxDepth;
-        File dir = new File("pages");
-        if(dir.mkdir()) {
-            System.out.println("Pages directory created.");
-        }
-            
-        for (File childFile : dir.listFiles()) {
-            childFile.delete();
-        
-        }
         String startURL;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Starting URL: ");
@@ -44,7 +36,6 @@ public class WebCrawler {
         pageNum = crawl(startURL, maxDepth, pageNum);
         long endTime = System.currentTimeMillis();
         System.out.println("Time took: " + (endTime - startTime) + " milliseconds");
-        
 
     }
 
@@ -89,13 +80,12 @@ public class WebCrawler {
 
     //Creates UNI-Gram and store page
     public static void processPage(String HTML, int pageNum) {
-        char myChar;
         int indexOf;
 
         int[] uniGram = new int[95];
         for (int pos = 0; pos < HTML.length(); ++pos) {
-            myChar = HTML.charAt(pos);
-            indexOf = (int) myChar;
+
+            indexOf = (int) HTML.charAt(pos); // Improvement #2
             if (indexOf >= 32 && indexOf < 127) {
                 uniGram[indexOf - 32]++;
             }
@@ -103,7 +93,13 @@ public class WebCrawler {
 
         String path = ""; //Test
         try {
-            
+
+            File dir = new File("pages");
+
+            // attempt to create the directory here
+            if(dir.mkdir()) {
+                System.out.println("Pages directory created.");
+            }
             File file = new File("pages/" + pageNum + ".txt");
             path = file.getAbsolutePath();
             FileWriter writer = new FileWriter(file);
@@ -126,15 +122,13 @@ public class WebCrawler {
         ArrayList<String> links = new ArrayList();
         Pattern p = Pattern.compile("href=\"([^\"]*)\"");
         Matcher m = p.matcher(HTML);
-        String link = "";
+        // Improvement #2
         while (m.find() && links.size() < 13) { //Improvement #1
-            //System.out.println(m.group());
-            
+
             String href = m.group();
             int firstQuote = href.indexOf("\"");
             href = href.substring(firstQuote + 1);
             href = href.substring(0, href.length() - 1);
-            //link = m.group().substring(m.group().indexOf("\"") + 1, m.group().indexOf("\"", m.group().indexOf("\"")) + 1);
             links.add(href);
             
         }
