@@ -16,7 +16,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author Owner
@@ -27,6 +26,15 @@ public class WebCrawler {
         long startTime = System.currentTimeMillis();
         int pageNum = 0;
         int maxDepth;
+        File dir = new File("pages");
+        if(dir.mkdir()) {
+            System.out.println("Pages directory created.");
+        }
+            
+        for (File childFile : dir.listFiles()) {
+            childFile.delete();
+        
+        }
         String startURL;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Starting URL: ");
@@ -36,6 +44,7 @@ public class WebCrawler {
         pageNum = crawl(startURL, maxDepth, pageNum);
         long endTime = System.currentTimeMillis();
         System.out.println("Time took: " + (endTime - startTime) + " milliseconds");
+        
 
     }
 
@@ -94,13 +103,7 @@ public class WebCrawler {
 
         String path = ""; //Test
         try {
-
-            File dir = new File("pages");
-
-            // attempt to create the directory here
-            if(dir.mkdir()) {
-                System.out.println("Pages directory created.");
-            }
+            
             File file = new File("pages/" + pageNum + ".txt");
             path = file.getAbsolutePath();
             FileWriter writer = new FileWriter(file);
