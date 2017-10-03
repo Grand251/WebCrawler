@@ -21,9 +21,12 @@ import java.util.ArrayList;
  * @author Owner
  */
 public class WebCrawler {
-
+    
+    private static ArrayList<String> pastURLs;
+    
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        pastURLs = new ArrayList();
+        
         int pageNum = 0;
         int maxDepth;
         File dir = new File("pages");
@@ -39,8 +42,11 @@ public class WebCrawler {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Starting URL: ");
         startURL = scanner.nextLine();
+        pastURLs.add(startURL);
         System.out.println("Depth: ");
         maxDepth = Integer.parseInt(scanner.nextLine());
+        
+        long startTime = System.currentTimeMillis();
         pageNum = crawl(startURL, maxDepth, pageNum);
         long endTime = System.currentTimeMillis();
         System.out.println("Time took: " + (endTime - startTime) + " milliseconds");
