@@ -56,8 +56,9 @@ public class WebCrawler {
 
     public static int crawl(String URL, int depth, int pageNum) {
         String HTML;
-        
-        try {
+        if (!pastURLs.contains(URL)){
+            pastURLs.add(URL);
+            try {
             HTML = getPage(URL); // Get HTML code. Throws Exception if URL not valid
 
             pageNum++; //Increment pageNum if exception not thrown
@@ -76,6 +77,9 @@ public class WebCrawler {
         }
 
         return pageNum;
+        }
+            
+        
     }
 
     //Returns HTML string of page
